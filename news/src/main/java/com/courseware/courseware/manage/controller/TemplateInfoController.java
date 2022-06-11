@@ -16,22 +16,18 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * @author ltf
+ * Class {@code NewsController} 定义了关于模板相关的操作，包括上传、下载相关操作
+ * @author 杨宇涵
  */
 @Slf4j
 @RestController
 public class TemplateInfoController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TemplateInfoController.class);
-
-
     @Value("${spring.upload.path}")
     private String path;
-
-    @Value("${spring.file.domain}")
-    private String domainUrl;
-
-
-
+    /**
+     * <p> 上传文件
+     */
     @PostMapping("/uploadOther")
     @ResponseBody
     public Result uploadOther(@RequestParam("file") MultipartFile file) {
@@ -43,7 +39,7 @@ public class TemplateInfoController {
             return result;
         }
         String fileName = file.getOriginalFilename();
-        String ext = fileName.substring(fileName.lastIndexOf("."), fileName.length()).toLowerCase();
+        String ext = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();
         fileName = UUID.randomUUID().toString()+ext;
         File dest = new File(path + fileName);
         try {
@@ -60,13 +56,15 @@ public class TemplateInfoController {
         }
         return result;
     }
-
+    /**
+     * <p> 下载文件，包括设置强制下载不打开，设置文件名
+     */
     @GetMapping("/download")
     public String download(String fileName, HttpServletResponse response) {
         File file = new File(path+fileName);
         if (file.exists()) {
-            response.setContentType("application/force-download");// 设置强制下载不打开
-            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);// 设置文件名
+            response.setContentType("application/force-download");
+            response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);
             byte[] buffer = new byte[1024];
             FileInputStream fis = null;
             BufferedInputStream bis = null;
@@ -101,5 +99,4 @@ public class TemplateInfoController {
         }
         return "下载失败";
     }
-
 }

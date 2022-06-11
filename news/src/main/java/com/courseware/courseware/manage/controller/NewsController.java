@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Class {@code NewsController} 定义了关于黑名单相关的操作，包括返回黑名单数据，解除名单人员，冻结人员
+ * Class {@code NewsController} 定义了关于新闻相关的操作，包括新增新闻，评论，收藏等相关操作
  * @author 杨宇涵
  */
 @Slf4j
@@ -37,6 +37,10 @@ public class NewsController {
     private NewsCollectionDao newsCollectionDao;
     @Autowired
     private NewsCommentDao newsCommentDao;
+    /**
+     * <p>查询新闻信息，返回新闻实体列表
+     * @return 新闻列表
+     */
     @GetMapping("/news/list")
     public Result<NewsEntity> list(@ModelAttribute NewsParam param){
         Result result = new Result();
@@ -66,7 +70,10 @@ public class NewsController {
         }
         return result;
     }
-
+    /**
+     * <p>根据新闻名称查询新闻信息，返回新闻实体列表
+     * @return 新闻列表
+     */
     @GetMapping("/news/key")
     public Result<NewsEntity> list(String key){
         Result result = new Result();
@@ -83,7 +90,9 @@ public class NewsController {
         }
         return result;
     }
-
+    /**
+     * <p> 添加新闻
+     */
     @PostMapping("/news/add")
     public Result<NewsEntity> add(@ModelAttribute NewsParam param){
         Result result = new Result();
@@ -99,7 +108,9 @@ public class NewsController {
         }
         return result;
     }
-
+    /**
+     * <p> 添加评论
+     */
     @PostMapping("/news/addComment")
     public Result<Void> addComment(@ModelAttribute NewsCommentEntity entity){
         Result result = new Result();
@@ -114,8 +125,9 @@ public class NewsController {
         }
         return result;
     }
-
-
+    /**
+     * <p> 查询评论
+     */
     @GetMapping("/news/commentList")
     public Result<NewsCommentEntity> commentList(@ModelAttribute NewsCommentEntity entity){
         Result result = new Result();
@@ -125,10 +137,6 @@ public class NewsController {
             wrapper.setEntity(entity);
             List<NewsCommentEntity> collectionEntityList =  newsCommentDao.selectList(wrapper);
             result.setList(collectionEntityList);
-//            if(!CollectionUtils.isEmpty(collectionEntityList)){
-//                List<NewsEntity> newsEntityList = newsDao.selectBatchIds(collectionEntityList.stream().map(e->e.getNewsId()).collect(Collectors.toList()));
-//                result.setList(newsEntityList);
-//            }
         }catch (Exception e){
             log.error("NewsController-commentList-error:",e);
             result.setCode(500);
@@ -136,8 +144,9 @@ public class NewsController {
         }
         return result;
     }
-
-
+    /**
+     * <p> 添加至收藏
+     */
     @PostMapping("/news/addCollection")
     public Result<Void> addCollection(@ModelAttribute NewsCollectionEntity entity){
         Result result = new Result();
@@ -155,7 +164,9 @@ public class NewsController {
         }
         return result;
     }
-
+    /**
+     * <p> 查询收藏
+     */
     @GetMapping("/news/collectionList")
     public Result<NewsEntity> collectionList(@ModelAttribute NewsCollectionEntity entity){
         Result result = new Result();
@@ -179,7 +190,9 @@ public class NewsController {
         }
         return result;
     }
-
+    /**
+     * <p> 删除收藏
+     */
     @PostMapping("/news/deleteCollection")
     public Result<Void> deleteCollection(Long collectionId){
         Result result = new Result();

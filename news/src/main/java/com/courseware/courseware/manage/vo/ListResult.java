@@ -7,6 +7,5 @@ import java.util.List;
 
 @Data
 public class ListResult<T> implements Serializable {
-
     private List<T> records;
 }

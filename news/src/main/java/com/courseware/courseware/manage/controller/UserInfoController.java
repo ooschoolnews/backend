@@ -14,22 +14,24 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
 
 /**
- * @author ltf
+ * Class {@code UserInfoController} 定义了关于用户相关的操作，包括用户注册、登录、更新信息相关操作
+ * @author 杨宇涵
  */
 @Slf4j
 @RestController
 public class UserInfoController {
-
     @Autowired
     private UserInfoDao userDao;
-
+    /**
+     * <p> 用户登录
+     */
     @PostMapping("/user/login")
-    public Result<UserInfoEntity> login(@ModelAttribute UserInfoEntity dto){
+    public Result<UserInfoEntity> login(@ModelAttribute UserInfoEntity user){
         Result result = new Result();
         result.setCode(200);
         try {
             QueryWrapper<UserInfoEntity> wrapper = new QueryWrapper<>();
-            wrapper.setEntity(dto);
+            wrapper.setEntity(user);
             UserInfoEntity userEntity = userDao.selectOne(wrapper);
             if(Objects.isNull(userEntity)){
                 result.setCode(400);
@@ -45,20 +47,22 @@ public class UserInfoController {
         }
         return result;
     }
-
+    /**
+     * <p> 用户注册
+     */
     @PostMapping("/user/register")
-    public Result<Void> register(@ModelAttribute UserInfoEntity dto){
+    public Result<Void> register(@ModelAttribute UserInfoEntity user){
         Result result = new Result();
         result.setCode(200);
         try{
             QueryWrapper<UserInfoEntity> wrapper = new QueryWrapper<>();
-            wrapper.eq("mobile",dto.getMobile());
+            wrapper.eq("mobile",user.getMobile());
             UserInfoEntity userEntity = userDao.selectOne(wrapper);
             if(Objects.nonNull(userEntity)){
                 result.setCode(400);
                 result.setMessage("此手机号已注册");
             }else{
-                userDao.insert(dto);
+                userDao.insert(user);
             }
         }catch (Exception e){
             log.error("注册失败：",e);
@@ -67,18 +71,20 @@ public class UserInfoController {
         }
         return result;
     }
-
+    /**
+     * <p> 用户更换密码
+     */
     @PostMapping("/user/update")
-    public Result<Void> update(@ModelAttribute UserInfoEntity dto){
+    public Result<Void> update(@ModelAttribute UserInfoEntity user){
         Result result = new Result();
         result.setCode(200);
         try{
-            UserInfoEntity userEntity = userDao.selectById(dto.getId());
-            if(!userEntity.getPassword().equals(dto.getPassword())){
+            UserInfoEntity userEntity = userDao.selectById(user.getId());
+            if(!userEntity.getPassword().equals(user.getPassword())){
                 result.setCode(400);
                 result.setMessage("原密码错误");
             }
-            userEntity.setPassword(dto.getPassword());
+            userEntity.setPassword(user.getPassword());
             userDao.updateById(userEntity);
         }catch (Exception e){
             log.error("修改失败:",e);

@@ -7,11 +7,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author ltf
+ * 返回参数
  */
 @Data
 public class Result<T> implements Serializable {
-    private Integer code;
+    private Integer code;//200成功 500异常
     private List<T> list;
     private T entity;
     private IPage<T> page;
