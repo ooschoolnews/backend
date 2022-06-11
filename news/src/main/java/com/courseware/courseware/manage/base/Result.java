@@ -11,14 +11,9 @@ import java.util.List;
  */
 @Data
 public class Result<T> implements Serializable {
-
     private Integer code;
-
     private List<T> list;
-
     private T entity;
-
     private IPage<T> page;
-
     private String message;
 }

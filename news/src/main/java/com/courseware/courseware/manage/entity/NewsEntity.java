@@ -9,49 +9,25 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-
 /**
-* news
-*/
+ * Class {@code NewsEntity} 定义了关于校园新闻实体，利用Serializable接口序列化，实体内容包括id,标题，内容，新闻类型，创建时间，图片url
+ * @author 杨宇涵
+ */
 @Data
 @TableName(value = "news")
 public class NewsEntity implements Serializable{
-
-    
-    /**
-    * id
-    */
     @TableId(type= IdType.AUTO)
     private Long id;
-    
-    /**
-    * 标题
-    */
     @TableField
     private String title;
-    
-    /**
-    * 内容
-    */
     @TableField
     private String content;
-    
-    /**
-    *
-    */
     @TableField
     private Integer type;
-    
-    /**
-    * 创建时间
-    */
     @TableField
     private Long createAt;
-
     @TableField
     private String url;
-
     @TableField(exist = false)
     private Long collectionId;
-
 }

@@ -24,20 +24,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
+/**
+ * Class {@code NewsController} 定义了关于黑名单相关的操作，包括返回黑名单数据，解除名单人员，冻结人员
+ * @author 杨宇涵
+ */
 @Slf4j
 @RestController
 public class NewsController {
-
     @Autowired
     private NewsDao newsDao;
-
     @Autowired
     private NewsCollectionDao newsCollectionDao;
-
     @Autowired
     private NewsCommentDao newsCommentDao;
-
     @GetMapping("/news/list")
     public Result<NewsEntity> list(@ModelAttribute NewsParam param){
         Result result = new Result();

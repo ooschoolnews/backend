@@ -1,6 +1,5 @@
 package com.courseware.courseware.manage.entity;
 
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,42 +8,21 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-
 /**
-* user_info
-*/
+ * Class {@code UserInfoEntity} 定义了用户实体，利用Serializable接口序列化，实体内容包括id,用户名称，用户密码，手机号，创建时间
+ * @author 杨宇涵
+ */
 @Data
 @TableName(value = "user_info")
 public class UserInfoEntity implements Serializable{
-
-    /**
-    * id
-    */
     @TableId(type = IdType.AUTO)
     private Long id;
-    
-    /**
-    * 用户名称
-    */
     @TableField
     private String userName;
-    
-    /**
-    * 用户密码
-    */
     @TableField
     private String password;
-    
-    /**
-    * 手机号
-    */
     @TableField
     private String mobile;
-    
-    /**
-    * 创建时间
-    */
     @TableField
     private Long createAt;
-
 }
