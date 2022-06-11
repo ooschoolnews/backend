@@ -25,9 +25,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-/**
- * @author ltf
- */
 @Slf4j
 @RestController
 public class NewsController {
