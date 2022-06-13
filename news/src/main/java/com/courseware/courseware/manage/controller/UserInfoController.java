@@ -7,6 +7,7 @@ import com.courseware.courseware.manage.entity.UserInfoEntity;
 import com.courseware.courseware.manage.mapper.UserInfoDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -90,6 +91,23 @@ public class UserInfoController {
             log.error("修改失败:",e);
             result.setCode(500);
             result.setMessage("修改失败");
+        }
+        return result;
+    }
+    /**
+     * <p> 根据用户名返回用户名称
+     */
+    @GetMapping("/user/name")
+    public Result<String> getName(@ModelAttribute UserInfoEntity user){
+        Result result = new Result();
+        result.setCode(200);
+        try{
+            UserInfoEntity userEntity = userDao.selectById(user.getId());
+            result.setEntity(userEntity.getUserName());
+        }catch (Exception e){
+            log.error("查找失败",e);
+            result.setCode(500);
+            result.setMessage("查找失败");
         }
         return result;
     }
