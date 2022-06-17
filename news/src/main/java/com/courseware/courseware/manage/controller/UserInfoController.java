@@ -3,7 +3,9 @@ package com.courseware.courseware.manage.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.courseware.courseware.manage.base.Result;
+import com.courseware.courseware.manage.entity.FeedbackEntity;
 import com.courseware.courseware.manage.entity.UserInfoEntity;
+import com.courseware.courseware.manage.mapper.FeedbackDao;
 import com.courseware.courseware.manage.mapper.UserInfoDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ import java.util.Objects;
 public class UserInfoController {
     @Autowired
     private UserInfoDao userDao;
+    @Autowired
+    private FeedbackDao feedbackDao;
     /**
      * <p> 用户登录
      */
@@ -108,6 +112,23 @@ public class UserInfoController {
             log.error("查找失败",e);
             result.setCode(500);
             result.setMessage("查找失败");
+        }
+        return result;
+    }
+
+    /**
+     * <p> 获取用户反馈
+     */
+    @PostMapping("/user/feedback")
+    public Result<Void> feedback(@ModelAttribute FeedbackEntity feedbackEntity){
+        Result result = new Result();
+        result.setCode(200);
+        try{
+            feedbackDao.insert(feedbackEntity);
+        }catch (Exception e){
+            log.error("反馈失败:",e);
+            result.setCode(500);
+            result.setMessage("反馈失败");
         }
         return result;
     }

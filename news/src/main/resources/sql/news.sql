@@ -71,5 +71,17 @@ CREATE TABLE `user_info` (
   `create_at` bigint(13) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1378681230920278018 DEFAULT CHARSET=utf8;
+-- ----------------------------
+-- Table structure for feedback
+-- ----------------------------
+DROP TABLE IF EXISTS `feedback`;
+CREATE TABLE `feedback` (
+                             `id` bigint(10) NOT NULL AUTO_INCREMENT COMMENT 'id',
+                             `user_id` bigint(10) DEFAULT NULL COMMENT '用户id',
+                             `feedback` varchar(200) DEFAULT NULL COMMENT '反馈内容',
+                             `create_at` bigint(13) DEFAULT NULL COMMENT '创建时间',
+                             PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 
 SET FOREIGN_KEY_CHECKS = 1;
