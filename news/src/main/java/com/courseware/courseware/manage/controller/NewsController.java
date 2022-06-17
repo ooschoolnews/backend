@@ -153,6 +153,9 @@ public class NewsController {
         result.setCode(200);
         try {
             entity.setCreateAt(System.currentTimeMillis());
+            if(newsCollectionDao.selectById(entity.getId())!=null){
+                newsCollectionDao.deleteById(entity.getId());
+            }
             newsCollectionDao.insert(entity);
             Map<String,Long> map = new HashMap<>();
             map.put("collectionId",entity.getId());
